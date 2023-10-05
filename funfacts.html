@@ -13,17 +13,78 @@
   <title> Fun Facts | Rachel K. Cortez </title>
   <body>
     <a href=./index.html>
-        <button>
-          <p class="return-home"> Return Home</p>
+        <button class="return-home"> Return Home
         </button>
       </a>
-    <div> <h1>Fun Facts!</h1> </div>
-    <div class="bullets">
-        <ul> 
-            <li> I make <a class = "paragraph" href= https://www.redbubble.com/people/rachcort/shop target="_blank" rel="noopener noreferrer"> stickers</a>!</li>
-            <li> I have a white crusty dog! </li>
-            <li> I love to travel and eat food!</li>
+    <div> <h1 class = "center">Fun Facts!</h1> </div>
+    <div>
+        <ul class="bullets"> 
+            <li class="rcorners1"> I make <a href= https://www.redbubble.com/people/rachcort/shop target="_blank" rel="noopener noreferrer" class = "fun-fact"> stickers</a>!</li>
+            <li class="rcorners1"> I have a white crusty dog! </li>
+            <li class="rcorners1"> I love to travel and eat food!</li>
         </ul>
     </div>
+
+    <div> <h2 class="fav-color"> Where am I from? </h2></div>
+    <div id="guess_display"></div>
+
+<form id="guess_form">
+    <label> Guess a letter:
+        <input type="text" id="guess_input">
+    </label>  
+</form>
+<div id="guess_status"></div>
+
+    
+<script> 
+    var guessForm = document.getElementById("guess_form");
+    var guessDisplay = document.getElementById("guess_display");
+    var guessInput = document.getElementById("guess_input");
+    var guessStatus = document.getElementById("guess_status");
+
+    var secretWord = "sacramento";
+    var guessedWord = [];
+    var guessedLetters = [];
+    for (var i = 0; i < secretWord.length; i++) {
+        guessedWord[i] = "_";
+    };
+
+    var checkLetterGuess = function(letter) {
+        var foundLetter = false;
+        guessedLetters.push(letter);
+        for (var i=0; i<secretWord.length; i++) {
+            if (secretWord[i] === letter) {
+                guessedWord[i] = letter;
+                foundLetter=true;
+            }
+        }
+        return foundLetter;
+    };
+
+    var hasWon = function() {
+        if (secretWord === guessedWord.join("")) {
+            return true;
+        }
+    };
+
+    var displayGuessedWord = function() {
+        guessDisplay.innerHTML = guessedWord.join(" ");
+    };
+
+    guessForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        var foundLetter = checkLetterGuess(guessInput.value);
+        if (foundLetter) {
+            guessStatus.innerHTML = "You found a letter!";
+        } else {
+            guessStatus.innerHTML = "Sorry letter not found :(";
+        } if (hasWon()) {
+            guessStatus.innerHTML += " You got the word!";
+        }
+        displayGuessedWord();
+        guessInput.value = "";
+    });
+    displayGuessedWord();
+</script>
   </body>
 </html>
